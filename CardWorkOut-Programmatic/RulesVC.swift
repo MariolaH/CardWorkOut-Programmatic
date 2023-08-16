@@ -38,7 +38,7 @@ class RulesVC: UIViewController {
     func configureRuleslabel() {
         view.addSubview(rulesLabel)
         rulesLabel.translatesAutoresizingMaskIntoConstraints = false
-        rulesLabel.text = "The value of each card represents the number of exercise you do. \n\nJ = 11, Q = 12, K = 13, A = 14"
+        rulesLabel.text = "The value of each card represents the number of exercises you do. \n\nJ = 11, Q = 12, K = 13, A = 14"
         rulesLabel.textAlignment = .center
         rulesLabel.font = .systemFont(ofSize: 19, weight: .semibold)
         rulesLabel.lineBreakMode = .byWordWrapping
