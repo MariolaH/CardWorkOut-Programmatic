@@ -11,8 +11,10 @@ class CardSelectionVC: UIViewController {
 
     let cardImageView = UIImageView()
     let stopButton = CWButton(backgroundColor: .systemRed, title: "STOP!")
-    let resetButton = CWButton(backgroundColor: .systemGreen, title: "RESET")
+    let resetButton = CWButton(backgroundColor: .systemGreen, title: "START")
     let rulesButton = CWButton(backgroundColor: .systemBlue, title: "RULES")
+    let cards: [UIImage] = CardDeck.allValues
+    var timer: Timer!
     
     
     override func viewDidLoad() {
@@ -20,6 +22,24 @@ class CardSelectionVC: UIViewController {
         // .systemBackground will give you light in light more and vise versa
         view.backgroundColor = .systemBackground
         configureUI()
+        startTimer()
+    }
+    
+    func startTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(showRandomCard), userInfo: nil, repeats: true)
+    }
+    
+    @objc func showRandomCard() {
+        cardImageView.image = cards.randomElement()
+    }
+    
+    @objc func stopTimer() {
+        timer.invalidate()
+    }
+    
+    @objc func resetTimer() {
+        stopTimer()
+        startTimer()
     }
     
     func configureUI() {
@@ -46,7 +66,7 @@ class CardSelectionVC: UIViewController {
     
     func configureStopButton() {
         view.addSubview(stopButton)
-        
+        stopButton.addTarget(self, action: #selector(stopTimer), for: .touchUpInside)
         NSLayoutConstraint.activate([
             stopButton.widthAnchor.constraint(equalToConstant: 260),
             stopButton.heightAnchor.constraint(equalToConstant: 50),
@@ -57,7 +77,7 @@ class CardSelectionVC: UIViewController {
     
     func configureResetButton() {
         view.addSubview(resetButton)
-        
+        resetButton.addTarget(self, action: #selector(resetTimer), for: .touchUpInside )
         NSLayoutConstraint.activate([
             resetButton.widthAnchor.constraint(equalToConstant: 115),
             resetButton.heightAnchor.constraint(equalToConstant: 50),
